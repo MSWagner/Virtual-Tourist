@@ -32,6 +32,15 @@
 		D3D4718B20A35E97002567DB /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D4717320A35E97002567DB /* Appearance.swift */; };
 		D3D4718C20A35E97002567DB /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D3D4717520A35E97002567DB /* Info.plist */; };
 		D3D4718E20A36003002567DB /* DesignableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D4718D20A36003002567DB /* DesignableButton.swift */; };
+		D3D4719A20A36419002567DB /* ReactiveMapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3D4719120A36418002567DB /* ReactiveMapKit.framework */; };
+		D3D4719B20A36419002567DB /* AlamofireImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3D4719220A36418002567DB /* AlamofireImage.framework */; };
+		D3D4719C20A36419002567DB /* SimpleButton.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3D4719320A36418002567DB /* SimpleButton.framework */; };
+		D3D4719D20A36419002567DB /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3D4719420A36418002567DB /* ReactiveSwift.framework */; };
+		D3D4719E20A36419002567DB /* ReactiveMoya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3D4719520A36418002567DB /* ReactiveMoya.framework */; };
+		D3D4719F20A36419002567DB /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3D4719620A36418002567DB /* ReactiveCocoa.framework */; };
+		D3D471A020A36419002567DB /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3D4719720A36418002567DB /* Alamofire.framework */; };
+		D3D471A120A36419002567DB /* Moya.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3D4719820A36418002567DB /* Moya.framework */; };
+		D3D471A220A36419002567DB /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3D4719920A36418002567DB /* Result.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +70,15 @@
 		D3D4717320A35E97002567DB /* Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 		D3D4717520A35E97002567DB /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3D4718D20A36003002567DB /* DesignableButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DesignableButton.swift; sourceTree = "<group>"; };
+		D3D4719120A36418002567DB /* ReactiveMapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveMapKit.framework; path = Carthage/Build/iOS/ReactiveMapKit.framework; sourceTree = "<group>"; };
+		D3D4719220A36418002567DB /* AlamofireImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlamofireImage.framework; path = Carthage/Build/iOS/AlamofireImage.framework; sourceTree = "<group>"; };
+		D3D4719320A36418002567DB /* SimpleButton.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SimpleButton.framework; path = Carthage/Build/iOS/SimpleButton.framework; sourceTree = "<group>"; };
+		D3D4719420A36418002567DB /* ReactiveSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveSwift.framework; path = Carthage/Build/iOS/ReactiveSwift.framework; sourceTree = "<group>"; };
+		D3D4719520A36418002567DB /* ReactiveMoya.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveMoya.framework; path = Carthage/Build/iOS/ReactiveMoya.framework; sourceTree = "<group>"; };
+		D3D4719620A36418002567DB /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
+		D3D4719720A36418002567DB /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		D3D4719820A36418002567DB /* Moya.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Moya.framework; path = Carthage/Build/iOS/Moya.framework; sourceTree = "<group>"; };
+		D3D4719920A36418002567DB /* Result.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Result.framework; path = Carthage/Build/iOS/Result.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +86,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3D471A120A36419002567DB /* Moya.framework in Frameworks */,
+				D3D4719A20A36419002567DB /* ReactiveMapKit.framework in Frameworks */,
+				D3D4719F20A36419002567DB /* ReactiveCocoa.framework in Frameworks */,
+				D3D471A220A36419002567DB /* Result.framework in Frameworks */,
+				D3D4719E20A36419002567DB /* ReactiveMoya.framework in Frameworks */,
+				D3D4719C20A36419002567DB /* SimpleButton.framework in Frameworks */,
+				D3D471A020A36419002567DB /* Alamofire.framework in Frameworks */,
+				D3D4719B20A36419002567DB /* AlamofireImage.framework in Frameworks */,
+				D3D4719D20A36419002567DB /* ReactiveSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +106,7 @@
 			children = (
 				D3D4714E20A35E8A002567DB /* Cartfile */,
 				D3D4713820A35D48002567DB /* Virtual-Tourist */,
+				D3D4719020A363C3002567DB /* Carthage */,
 				D3D4713720A35D48002567DB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -226,6 +254,22 @@
 			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
+		D3D4719020A363C3002567DB /* Carthage */ = {
+			isa = PBXGroup;
+			children = (
+				D3D4719720A36418002567DB /* Alamofire.framework */,
+				D3D4719220A36418002567DB /* AlamofireImage.framework */,
+				D3D4719820A36418002567DB /* Moya.framework */,
+				D3D4719620A36418002567DB /* ReactiveCocoa.framework */,
+				D3D4719120A36418002567DB /* ReactiveMapKit.framework */,
+				D3D4719520A36418002567DB /* ReactiveMoya.framework */,
+				D3D4719420A36418002567DB /* ReactiveSwift.framework */,
+				D3D4719920A36418002567DB /* Result.framework */,
+				D3D4719320A36418002567DB /* SimpleButton.framework */,
+			);
+			name = Carthage;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -236,6 +280,7 @@
 				D3D4713220A35D48002567DB /* Sources */,
 				D3D4713320A35D48002567DB /* Frameworks */,
 				D3D4713420A35D48002567DB /* Resources */,
+				D3D4718F20A360F0002567DB /* Carthage */,
 			);
 			buildRules = (
 			);
@@ -298,6 +343,32 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D3D4718F20A360F0002567DB /* Carthage */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Moya.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/AlamofireImage.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SimpleButton.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Result.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ReactiveSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ReactiveMoya.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ReactiveCocoa.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ReactiveMapKit.framework",
+			);
+			name = Carthage;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D3D4713220A35D48002567DB /* Sources */ = {
@@ -464,6 +535,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T3TBY9W4TM;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Virtual-Tourist/SupportingFiles/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -482,6 +557,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = T3TBY9W4TM;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Virtual-Tourist/SupportingFiles/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

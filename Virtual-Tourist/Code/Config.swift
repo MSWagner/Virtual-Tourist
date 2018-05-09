@@ -2,7 +2,7 @@ import Foundation
 
 /// Global set of configuration values for this application.
 struct Config {
-    static let keyPrefix = "at.allaboutapps"
+    static let keyPrefix = "eu.mws.virtual-tourist"
 
     // MARK: API
 
@@ -45,10 +45,10 @@ struct Config {
         static let lastUpdate = Config.keyPrefix + ".lastUpdate"
     }
 
-    // MARK: Keychain
+    // MARK: Flickr
 
-    struct Keychain {
-        static let credentialStorageKey = "CredentialsStorage"
-        static let credentialsKey = "credentials"
+    struct Flickr {
+        static let APIKey = "a6bb54b2dfd86de3561e7eacafdd1dca"
+        static let Secret = "e15e7483b6c490de"
     }
 }
