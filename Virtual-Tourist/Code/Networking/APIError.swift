@@ -61,21 +61,6 @@ enum APIError: Swift.Error, LocalizedError {
 
     private func localizedMoyaError(statusCode: Int, target: API) -> String {
         switch (target, statusCode) {
-        case (.postLogin, 422), (.postLogin, 400):
-            return Strings.Network.errorWrongCredentials
-//        case (.postForgotPassword, 404):
-//            return Strings.Network.errorWrongEmail
-//        case (.postForgotPassword, 462):
-//            return Strings.Network.errorEmailSendFailed
-//        case (.postRegister, 400):
-//            return Strings.Network.errorWrongPayload
-//        case (.postRegister, 409):
-//            return Strings.Network.errorUsernameNotAvailable
-//        case (.postRegister, 464), (.postChangePassword, 464):
-//            return Strings.Network.errorWeakPassword
-//        case (.postChangePassword, 465):
-//            return Strings.Network.errorUnableToSetPassword
-
         default:
             if target.method == .get {
                 return String(format: Strings.Network.errorLoadingFailed, "\(statusCode)")

@@ -13,14 +13,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         Appearance.setup()
 
-        APIClient.request(.postLogin(username: "max", password: "test"), type: Foo.self)
-            .startWithResult { result in
-                if let error = result.error {
-                    print("error: \(error.localizedDescription)")
-                } else if let foo = result.value {
-                    print("value: \(foo)")
-                }
-            }
 
         return true
     }

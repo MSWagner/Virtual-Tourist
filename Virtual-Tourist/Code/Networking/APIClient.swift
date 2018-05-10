@@ -42,14 +42,14 @@ final class APIClient {
 
     /// Performs the request on the given `target`
     static func request(_ target: API) -> SignalProducer<Moya.Response, APIError> {
-        return request(target)
+        return request(target, authenticated: true)
             .filterSuccessfulStatusAndRedirectCodes()
             .mapError { APIError.moya($0, target) }
     }
 
     /// Performs the request on the given `target` and maps the respsonse to the specific type (using Decodable).
     static func request<T: Decodable>(_ target: API, type: T.Type, keyPath: String? = nil, decoder: JSONDecoder = Decoders.standardJSON) -> SignalProducer<T, APIError> {
-        return request(target)
+        return request(target, authenticated: true)
             .filterSuccessfulStatusAndRedirectCodes()
             .map(type, atKeyPath: keyPath, using: decoder)
             .mapError { APIError.moya($0, target) }
@@ -62,7 +62,7 @@ final class APIClient {
 
      - returns: SignalProducer, representing task
      */
-    private static func request(_ target: API) -> SignalProducer<Moya.Response, MoyaError> {
+    private static func request(_ target: API, authenticated: Bool = true) -> SignalProducer<Moya.Response, MoyaError> {
         // setup initial request
         let initialRequest: SignalProducer<Moya.Response, MoyaError> = provider
             .reactive

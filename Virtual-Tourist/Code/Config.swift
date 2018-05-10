@@ -10,14 +10,14 @@ struct Config {
         static var BaseURL: URL {
             switch Environment.current() {
             case .debug:
-                return URL(string: "https://dev.allaboutapps.at")!
+                return URL(string: "https://api.flickr.com")!
             case .release:
-                return URL(string: "https://dev.allaboutapps.at")!
+                return URL(string: "https://api.flickr.com")!
             }
         }
 
         static let RandomStubRequests = false
-        static let StubRequests = true
+        static let StubRequests = false
         static var TimeoutInterval: TimeInterval = 120.0
 
         static var NetworkLoggingEnabled: Bool {
