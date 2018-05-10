@@ -110,16 +110,7 @@
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="uvP-Mx-TK3">
-                                        <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="180" height="180"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </view>
-                                    </collectionViewCell>
-                                </cells>
+                                <cells/>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -136,6 +127,7 @@
                             <constraint firstItem="TaM-cH-suO" firstAttribute="leading" secondItem="rk1-OD-5WZ" secondAttribute="leading" id="tnE-tD-Emp"/>
                             <constraint firstAttribute="trailing" secondItem="jK7-kw-EeF" secondAttribute="trailing" constant="5" id="txr-Zg-FwQ"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="mHh-BE-Sh4"/>
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="jK7-kw-EeF" id="FQg-qh-UF0"/>

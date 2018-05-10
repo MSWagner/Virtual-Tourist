@@ -30,6 +30,9 @@ class PhotoCollectionViewModel {
         coordinate.producer.startWithValues {  [weak self] geoValues in
             guard let geoValues = geoValues else { return }
 
+            self?._photoURLs.value = []
+            self?.currentFlickrPhotos = nil
+
             let lat = Double(geoValues.latitude)
             let lng = Double(geoValues.longitude)
 
@@ -44,7 +47,6 @@ class PhotoCollectionViewModel {
 
         let lat = Double(coordinate.latitude)
         let lng = Double(coordinate.longitude)
-
         let nextPage = currentPhotos.page + 1 > currentPhotos.pages ? 1 : currentPhotos.page + 1
 
         searchImagesFor.apply((lat, lng, nextPage)).start()
@@ -53,7 +55,6 @@ class PhotoCollectionViewModel {
     lazy var searchImagesFor: Action<(Double, Double, Int?), FlickrPhotoSearchResult, APIError> = {
 
         return Action { geoValues in
-
             APIClient
                 .request(.photosSearch(lat: geoValues.0, lng: geoValues.1, page: geoValues.2 ?? 1), type: FlickrPhotoSearchResult.self)
                 .on { [weak self] (value) in
@@ -64,4 +65,12 @@ class PhotoCollectionViewModel {
                 }
         }
     }()
+
+    // MARK: - Deletion
+
+    func deletePhotoWith(_ indexPath: IndexPath) {
+        var tempArr = _photoURLs.value
+        tempArr.remove(at: indexPath.row)
+        _photoURLs.value = tempArr
+    }
 }
