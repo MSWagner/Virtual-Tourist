@@ -13,14 +13,19 @@ class ImageCollectionCell: UICollectionViewCell {
 
     @IBOutlet weak var imageView: UIImageView!
 
-    func configure(url: URL) {
+    func configure(photo: Photo) {
 
         imageView.af_cancelImageRequest()
         imageView.image = nil
 
-        imageView.startAnimating()
-        imageView.af_setImage(withURL: url) { [weak self] response in
-            self?.imageView.stopAnimating()
+        if let image = photo.image {
+            imageView.image =  UIImage(data: image)
+        } else if let url = photo.url {
+            imageView.af_setImage(withURL: url) { response in
+                photo.image = response.data
+
+                try? DataController.shared.viewContext.save()
+            }
         }
     }
 }

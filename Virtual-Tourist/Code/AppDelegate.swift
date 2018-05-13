@@ -8,11 +8,16 @@ struct Foo: Decodable {
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+
     var window: UIWindow?
+
+    var dataController: DataController!
 
     func application(_: UIApplication, didFinishLaunchingWithOptions _: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         Appearance.setup()
 
+        dataController = DataController.shared
+        dataController.load()
 
         return true
     }
@@ -21,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(_: UIApplication) {
+        saveViewContext()
     }
 
     func applicationWillEnterForeground(_: UIApplication) {
@@ -30,5 +36,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_: UIApplication) {
+        saveViewContext()
+    }
+
+    private func saveViewContext() {
+        try? dataController.viewContext.save()
     }
 }

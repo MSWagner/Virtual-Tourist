@@ -10,57 +10,67 @@ import Foundation
 import ReactiveSwift
 import MapKit
 import Result
+import CoreData
 
 class PhotoCollectionViewModel {
 
-    var coordinate: MutableProperty<CLLocationCoordinate2D?>
+    var pin: MutableProperty<Pin?>
 
     private var currentFlickrPhotos: FlickrPhotos?
 
-    private let _photoURLs = MutableProperty<[URL]>([])
-    lazy var photoURLs: Property<[URL]> = {
-        return Property(self._photoURLs)
-    }()
-
     // MARK: - Init
 
-    init(coordinate: MutableProperty<CLLocationCoordinate2D?>) {
-        self.coordinate = coordinate
+    init(pin: MutableProperty<Pin?>) {
+        self.pin = pin
 
-        coordinate.producer.startWithValues {  [weak self] geoValues in
-            guard let geoValues = geoValues else { return }
+        pin.producer.startWithValues {  [weak self] pin in
+            guard let pin = pin else { return }
 
-            self?._photoURLs.value = []
-            self?.currentFlickrPhotos = nil
+            if let photos = pin.photos, photos.count > 0 {
 
-            let lat = Double(geoValues.latitude)
-            let lng = Double(geoValues.longitude)
+                print("there is a photo")
+            } else {
+                print("there are no photos")
+                self?.currentFlickrPhotos = nil
 
-            self?.searchImagesFor.apply((lat, lng, nil)).start()
+                let lat = Double(pin.latitude)
+                let lng = Double(pin.longitude)
+
+                self?.searchImagesFor.apply((lat, lng, nil)).start()
+            }
         }
     }
 
     // MARK: - Network Requests
 
     func setNewCollection() {
-        guard let coordinate = coordinate.value, let currentPhotos = currentFlickrPhotos else { return }
+        guard let pin = pin.value, let currentPhotos = currentFlickrPhotos else { return }
 
-        let lat = Double(coordinate.latitude)
-        let lng = Double(coordinate.longitude)
         let nextPage = currentPhotos.page + 1 > currentPhotos.pages ? 1 : currentPhotos.page + 1
 
-        searchImagesFor.apply((lat, lng, nextPage)).start()
+        searchImagesFor.apply((pin.latitude, pin.longitude, nextPage)).start()
     }
 
     lazy var searchImagesFor: Action<(Double, Double, Int?), FlickrPhotoSearchResult, APIError> = {
-
         return Action { geoValues in
             APIClient
                 .request(.photosSearch(lat: geoValues.0, lng: geoValues.1, page: geoValues.2 ?? 1), type: FlickrPhotoSearchResult.self)
                 .on { [weak self] (value) in
                     self?.currentFlickrPhotos = value.photos
-                    self?._photoURLs.value = value.photos.photo.compactMap {
-                        return URL(string: "https://farm\($0.farm).staticflickr.com/\($0.server)/\($0.id)_\($0.secret)_q.jpg")
+
+                    let photos: [Photo] = value.photos.photo.compactMap {
+                        print("value.photos.photo.compactMap")
+                        let photo = Photo(context: DataController.shared.viewContext)
+                        photo.url = URL(string: "https://farm\($0.farm).staticflickr.com/\($0.server)/\($0.id)_\($0.secret)_q.jpg")
+
+                        return photo
+                    }
+
+                    // TODO: Implement and Test updating the current pin on View and CoreData
+                    if let pin = self?.pin.value, let oldPhotos = pin.photos {
+                        oldPhotos.addingObjects(from: photos)
+                        try? DataController.shared.viewContext.save()
+                        self?.pin.value = pin
                     }
                 }
         }
@@ -69,8 +79,6 @@ class PhotoCollectionViewModel {
     // MARK: - Deletion
 
     func deletePhotoWith(_ indexPath: IndexPath) {
-        var tempArr = _photoURLs.value
-        tempArr.remove(at: indexPath.row)
-        _photoURLs.value = tempArr
+        // TODO: Delete Photos
     }
 }

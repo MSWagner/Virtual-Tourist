@@ -12,6 +12,7 @@ import ReactiveSwift
 import ReactiveCocoa
 import ReactiveMapKit
 import Result
+import CoreData
 
 class MapViewController: UIViewController {
 
@@ -27,6 +28,8 @@ class MapViewController: UIViewController {
 
     var viewModel = MapViewModel()
 
+    let dataController = DataController.shared
+
     private var collectionViewController: CollectionViewController!
     private var isAnnotationAdded: Bool = false
 
@@ -41,15 +44,34 @@ class MapViewController: UIViewController {
         setupDragControlBinding()
 
         resetContainerView()
+
+        setupMap()
+        bindPins()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        setupMap()
         isAnnotationAdded = false
     }
 
     // MARK: - Setup
+
+    private func setupMap() {
+        mapView.register(PinAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+    }
+
+    private func bindPins() {
+//        viewModel.pins.producer.startWithValues { [weak self] pins in
+//            guard let `self` = self else { return }
+//
+//            let pinAnnotations = pins.map { PinAnnotation.init(pin: $0) }
+//
+//            self.mapView.removeAnnotations(self.mapView.annotations)
+//            self.mapView.addAnnotations(pinAnnotations)
+//        }
+    }
 
     private func setupCollectionViewController() {
         collectionViewController = childViewControllers.first as! CollectionViewController
@@ -108,22 +130,20 @@ class MapViewController: UIViewController {
 
             let touchPoint = gesture.location(in: mapView)
             let newCoordinates = mapView.convert(touchPoint, toCoordinateFrom: mapView)
-            viewModel.set(newCoordinates)
+            let pin = viewModel.setPin(forNewCoordinate: newCoordinates)
 
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = newCoordinates
+            let annotation = PinAnnotation(pin: pin)
             mapView.addAnnotation(annotation)
             mapView.selectAnnotation(annotation, animated: false)
 
-            animateContainerViewUpWith(newCoordinates)
+            animateContainerViewUpFor(newCoordinates)
         }
     }
 
     // MARK: - ContainerView Handler
 
-    private func animateContainerViewUpWith(_ coordinate: CLLocationCoordinate2D) {
-        let newCenterCoordinate = CLLocationCoordinate2D(latitude: coordinate.latitude - mapView.region.span.latitudeDelta * 0.4,
-                                                         longitude: coordinate.longitude)
+    private func animateContainerViewUpFor(_ coordinate: CLLocationCoordinate2D) {
+        let newCenterCoordinate = CLLocationCoordinate2D(latitude: coordinate.latitude - mapView.region.span.latitudeDelta * 0.4, longitude: coordinate.longitude)
         mapView.setCenter(newCenterCoordinate, animated: true)
 
         topConstraintContainerView.constant = self.collectionViewContainer.frame.height + view.safeAreaInsets.bottom
@@ -183,8 +203,12 @@ class MapViewController: UIViewController {
 extension MapViewController: MKMapViewDelegate {
 
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        if let annotationCoordinate = view.annotation?.coordinate {
-            animateContainerViewUpWith(annotationCoordinate)
+        print("didSelect")
+        if let pinAnnotation = view.annotation as? PinAnnotation {
+            print("inside didSelect")
+
+            viewModel.setPin(pinAnnotation.pin)
+            animateContainerViewUpFor(pinAnnotation.coordinate)
         }
     }
 }

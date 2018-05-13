@@ -9,25 +9,47 @@
 import Foundation
 import ReactiveSwift
 import MapKit
+import CoreData
 
 class MapViewModel {
 
-    private var selectedCoordinate = MutableProperty<CLLocationCoordinate2D?>(nil)
+    let dataController = DataController.shared
+
+    private var selectedPin = MutableProperty<Pin?>(nil)
+
+    private let _pins = MutableProperty<[Pin]>([])
+    lazy var pins: Property<[Pin]> = {
+        return Property(self._pins)
+    }()
+
+    init() {
+        let fetchRequest: NSFetchRequest<Pin> = Pin.fetchRequest()
+        if let pins = try? dataController.viewContext.fetch(fetchRequest) {
+            _pins.value = pins
+        }
+    }
 
     lazy var searchImagesFor: Action<Void, FlickrPhotoSearchResult, APIError> = {
-
         Action { geoValues in
-
             return APIClient.request(.photosSearch(lat: 48.210033, lng: 16.363449, page: 1), type: FlickrPhotoSearchResult.self)
-
         }
     }()
 
-    func set(_ coordinate: CLLocationCoordinate2D) {
-        selectedCoordinate.value = coordinate
+    func setPin(forNewCoordinate coordinate: CLLocationCoordinate2D) -> Pin {
+        let pin = Pin(context: dataController.viewContext)
+        pin.latitude = Double(coordinate.latitude)
+        pin.longitude = Double(coordinate.longitude)
+        try? dataController.viewContext.save()
+
+        setPin(pin)
+        return pin
+    }
+
+    func setPin(_ pin: Pin) {
+        selectedPin.value = pin
     }
 
     func getPhotoViewModel() -> PhotoCollectionViewModel {
-        return PhotoCollectionViewModel(coordinate: selectedCoordinate)
+        return PhotoCollectionViewModel(pin: selectedPin)
     }
 }

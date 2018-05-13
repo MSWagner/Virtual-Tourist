@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D393940F20A8942400F78AAE /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D393940E20A8942400F78AAE /* DataController.swift */; };
+		D393941220A8CECA00F78AAE /* PinAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D393941120A8CECA00F78AAE /* PinAnnotation.swift */; };
+		D393941520A8D58500F78AAE /* Pin+Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D393941420A8D58500F78AAE /* Pin+Coordinate.swift */; };
+		D393941720A8DFA300F78AAE /* PinAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D393941620A8DFA300F78AAE /* PinAnnotationView.swift */; };
 		D3D4714220A35D48002567DB /* Virtual_Tourist.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D3D4714020A35D48002567DB /* Virtual_Tourist.xcdatamodeld */; };
 		D3D4714F20A35E8A002567DB /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = D3D4714E20A35E8A002567DB /* Cartfile */; };
 		D3D4717620A35E97002567DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3D4715120A35E97002567DB /* Assets.xcassets */; };
@@ -48,6 +52,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D393940E20A8942400F78AAE /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		D393941120A8CECA00F78AAE /* PinAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinAnnotation.swift; sourceTree = "<group>"; };
+		D393941420A8D58500F78AAE /* Pin+Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pin+Coordinate.swift"; sourceTree = "<group>"; };
+		D393941620A8DFA300F78AAE /* PinAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinAnnotationView.swift; sourceTree = "<group>"; };
 		D3D4713620A35D48002567DB /* Virtual-Tourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Virtual-Tourist.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3D4714120A35D48002567DB /* Virtual_Tourist.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Virtual_Tourist.xcdatamodel; sourceTree = "<group>"; };
 		D3D4714E20A35E8A002567DB /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
@@ -109,6 +117,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D393941020A8CEB800F78AAE /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				D393941120A8CECA00F78AAE /* PinAnnotation.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		D393941320A8D3F800F78AAE /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				D3D4714020A35D48002567DB /* Virtual_Tourist.xcdatamodeld */,
+				D393941420A8D58500F78AAE /* Pin+Coordinate.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
 		D3D4712D20A35D48002567DB = {
 			isa = PBXGroup;
 			children = (
@@ -208,8 +233,9 @@
 		D3D4716520A35E97002567DB /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D393941320A8D3F800F78AAE /* CoreData */,
+				D393941020A8CEB800F78AAE /* Map */,
 				D3D471A920A37CFA002567DB /* API */,
-				D3D4714020A35D48002567DB /* Virtual_Tourist.xcdatamodeld */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -245,6 +271,7 @@
 		D3D4716F20A35E97002567DB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				D393940E20A8942400F78AAE /* DataController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -254,6 +281,7 @@
 			children = (
 				D3D471AE20A38926002567DB /* ImageCollectionCell.xib */,
 				D3D471B020A38947002567DB /* ImageCollectionCell.swift */,
+				D393941620A8DFA300F78AAE /* PinAnnotationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -394,11 +422,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3D471B120A38947002567DB /* ImageCollectionCell.swift in Sources */,
+				D393941520A8D58500F78AAE /* Pin+Coordinate.swift in Sources */,
 				D3D471AD20A3883C002567DB /* CollectionViewController.swift in Sources */,
 				D3D4717C20A35E97002567DB /* Environment.swift in Sources */,
+				D393941720A8DFA300F78AAE /* PinAnnotationView.swift in Sources */,
 				D3D4717A20A35E97002567DB /* Storyboard.swift in Sources */,
 				D3D4718520A35E97002567DB /* Decoders.swift in Sources */,
+				D393940F20A8942400F78AAE /* DataController.swift in Sources */,
 				D3D4718B20A35E97002567DB /* Appearance.swift in Sources */,
+				D393941220A8CECA00F78AAE /* PinAnnotation.swift in Sources */,
 				D3D471B520A3A0E8002567DB /* PhotoCollectionViewModel.swift in Sources */,
 				D3D4718120A35E97002567DB /* MoyaLogger.swift in Sources */,
 				D3D471B320A39140002567DB /* DragControl.swift in Sources */,
