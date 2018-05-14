@@ -235,13 +235,5 @@ extension MapViewController: MKMapViewDelegate {
             viewModel.setPin(pinAnnotation.pin)
             animateContainerViewUpFor(pinAnnotation.coordinate)
         }
-
-//        print("didSelect")
-//        if let pinAnnotation = view.annotation as? PinAnnotation {
-//            print("inside didSelect")
-//
-//            viewModel.setPin(pinAnnotation.pin)
-//            animateContainerViewUpFor(pinAnnotation.coordinate)
-//        }
     }
 }

@@ -33,7 +33,6 @@ enum APIError: Swift.Error, LocalizedError {
             }
 
         case let .underlying(error):
-            print(error)
             let nsError = error as NSError
             return nsError.code
         default:

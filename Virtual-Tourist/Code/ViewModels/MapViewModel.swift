@@ -28,7 +28,6 @@ class MapViewModel {
         let fetchRequest: NSFetchRequest<Pin> = Pin.fetchRequest()
         if let pins = try? dataController.viewContext.fetch(fetchRequest) {
             _pinAnnotationss.value = pins.map { PinAnnotation.init(pin: $0) }
-            print("Fetched \(pins.count) Pins from CoreData")
         }
     }
 
