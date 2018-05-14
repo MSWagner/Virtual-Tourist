@@ -22,6 +22,8 @@ class MapViewModel {
         return Property(_pinAnnotationss)
     }()
 
+    // MARK: - Fetching Pins (CoreData)
+
     func fetchPins() {
         let fetchRequest: NSFetchRequest<Pin> = Pin.fetchRequest()
         if let pins = try? dataController.viewContext.fetch(fetchRequest) {
@@ -29,6 +31,8 @@ class MapViewModel {
             print("Fetched \(pins.count) Pins from CoreData")
         }
     }
+
+    // MARK: - Setter/Getter
 
     func setPin(forNewCoordinate coordinate: CLLocationCoordinate2D) -> Pin {
         let pin = Pin(context: dataController.viewContext)

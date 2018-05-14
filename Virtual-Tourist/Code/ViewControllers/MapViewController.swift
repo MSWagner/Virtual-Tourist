@@ -43,10 +43,10 @@ class MapViewController: UIViewController {
         setupGestureRecognicer()
         setupDragControlBinding()
 
-        resetContainerView()
+        topConstraintContainerView.constant = 0
 
         setupMap()
-        bindPins()
+        bindViewModel()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -61,15 +61,7 @@ class MapViewController: UIViewController {
 
     private func setupMap() {
         mapView.register(PinAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
-    }
-
-    private func bindPins() {
-        viewModel.pinAnnotations.producer.startWithValues { [weak self] pinAnnotations in
-            guard let `self` = self else { return }
-
-            self.mapView.removeAnnotations(self.mapView.annotations)
-            self.mapView.addAnnotations(pinAnnotations)
-        }
+        mapView.register(PinAnnotationView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier)
     }
 
     private func setupCollectionViewController() {
@@ -115,6 +107,17 @@ class MapViewController: UIViewController {
         }
     }
 
+    // MARK: BindViewModel
+
+    private func bindViewModel() {
+        viewModel.pinAnnotations.producer.startWithValues { [weak self] pinAnnotations in
+            guard let `self` = self else { return }
+
+            self.mapView.removeAnnotations(self.mapView.annotations)
+            self.mapView.addAnnotations(pinAnnotations)
+        }
+    }
+
     // MARK: - IBActions
 
     @IBAction func onSetNewCollection(_ sender: Any) {
@@ -139,7 +142,7 @@ class MapViewController: UIViewController {
         }
     }
 
-    // MARK: - ContainerView Handler
+    // MARK: - CollectionView Container Handler
 
     private func animateContainerViewUpFor(_ coordinate: CLLocationCoordinate2D) {
         let newCenterCoordinate = CLLocationCoordinate2D(latitude: coordinate.latitude - mapView.region.span.latitudeDelta * 0.4, longitude: coordinate.longitude)
@@ -186,14 +189,12 @@ class MapViewController: UIViewController {
         }
     }()
 
+    // MARK: Map Functions
+
     private func deselectAllMarks() {
         mapView.selectedAnnotations.forEach { annotation in
             mapView.deselectAnnotation(annotation, animated: true)
         }
-    }
-
-    private func resetContainerView() {
-        topConstraintContainerView.constant = 0
     }
 }
 
@@ -201,13 +202,46 @@ class MapViewController: UIViewController {
 
 extension MapViewController: MKMapViewDelegate {
 
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        print("didSelect")
-        if let pinAnnotation = view.annotation as? PinAnnotation {
-            print("inside didSelect")
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 
+        var reuseID: String
+
+        if annotation is PinAnnotation {
+            reuseID = "singleAnnotation"
+        } else if annotation is MKClusterAnnotation {
+            reuseID = "clusterAnnotation"
+        } else {
+            return nil
+        }
+
+        var annotationView: PinAnnotationView
+        if let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseID) as? PinAnnotationView {
+            dequeuedView.annotation = annotation
+            annotationView = dequeuedView
+        } else {
+            annotationView = PinAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
+        }
+        return annotationView
+    }
+
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+
+        if let clusterAnnotation = view.annotation as? MKClusterAnnotation,
+            let firstPinAnnotation = clusterAnnotation.memberAnnotations.first as? PinAnnotation {
+            viewModel.setPin(firstPinAnnotation.pin)
+            animateContainerViewUpFor(firstPinAnnotation.coordinate)
+
+        } else if let pinAnnotation = view.annotation as? PinAnnotation {
             viewModel.setPin(pinAnnotation.pin)
             animateContainerViewUpFor(pinAnnotation.coordinate)
         }
+
+//        print("didSelect")
+//        if let pinAnnotation = view.annotation as? PinAnnotation {
+//            print("inside didSelect")
+//
+//            viewModel.setPin(pinAnnotation.pin)
+//            animateContainerViewUpFor(pinAnnotation.coordinate)
+//        }
     }
 }

@@ -14,16 +14,15 @@ import CoreData
 
 class PhotoCollectionViewModel {
 
+    private var dataController = DataController.shared
+
     private var selectedPin: MutableProperty<Pin?>
+    private var currentFlickrPhotos: FlickrPhotos?
 
     private let _photos = MutableProperty<[Photo]>([])
     lazy var photos: Property<[Photo]> = {
         return Property(self._photos)
     }()
-
-    private var dataController = DataController.shared
-
-    private var currentFlickrPhotos: FlickrPhotos?
 
     // MARK: - Init
 
@@ -98,11 +97,8 @@ class PhotoCollectionViewModel {
         let removedPhoto = _photos.value.remove(at: indexPath.row)
         pin.removeFromPhotos(removedPhoto)
 
-        do {
-            try DataController.shared.viewContext.save()
+        if dataController.saveContext() {
             self._photos.value = self._photos.value
-        } catch {
-            fatalError("Photos not saved")
         }
     }
 }

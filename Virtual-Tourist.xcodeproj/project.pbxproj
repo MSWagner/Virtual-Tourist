@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D354C27B20AA232600F88080 /* PKHUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D354C27A20AA232600F88080 /* PKHUD.framework */; };
 		D393940F20A8942400F78AAE /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D393940E20A8942400F78AAE /* DataController.swift */; };
 		D393941220A8CECA00F78AAE /* PinAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D393941120A8CECA00F78AAE /* PinAnnotation.swift */; };
 		D393941520A8D58500F78AAE /* Pin+Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D393941420A8D58500F78AAE /* Pin+Coordinate.swift */; };
@@ -25,7 +26,6 @@
 		D3D4718020A35E97002567DB /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D4716220A35E97002567DB /* API.swift */; };
 		D3D4718120A35E97002567DB /* MoyaLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D4716320A35E97002567DB /* MoyaLogger.swift */; };
 		D3D4718220A35E97002567DB /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D4716420A35E97002567DB /* Config.swift */; };
-		D3D4718420A35E97002567DB /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = D3D4716820A35E97002567DB /* .gitkeep */; };
 		D3D4718520A35E97002567DB /* Decoders.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D4716A20A35E97002567DB /* Decoders.swift */; };
 		D3D4718620A35E97002567DB /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D4716B20A35E97002567DB /* Formatters.swift */; };
 		D3D4718820A35E97002567DB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D4716E20A35E97002567DB /* AppDelegate.swift */; };
@@ -52,6 +52,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D354C27A20AA232600F88080 /* PKHUD.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PKHUD.framework; path = Carthage/Build/iOS/PKHUD.framework; sourceTree = "<group>"; };
 		D393940E20A8942400F78AAE /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		D393941120A8CECA00F78AAE /* PinAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinAnnotation.swift; sourceTree = "<group>"; };
 		D393941420A8D58500F78AAE /* Pin+Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Pin+Coordinate.swift"; sourceTree = "<group>"; };
@@ -71,7 +72,6 @@
 		D3D4716220A35E97002567DB /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		D3D4716320A35E97002567DB /* MoyaLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoyaLogger.swift; sourceTree = "<group>"; };
 		D3D4716420A35E97002567DB /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
-		D3D4716820A35E97002567DB /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		D3D4716A20A35E97002567DB /* Decoders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Decoders.swift; sourceTree = "<group>"; };
 		D3D4716B20A35E97002567DB /* Formatters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		D3D4716E20A35E97002567DB /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -103,6 +103,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3D471A120A36419002567DB /* Moya.framework in Frameworks */,
+				D354C27B20AA232600F88080 /* PKHUD.framework in Frameworks */,
 				D3D4719A20A36419002567DB /* ReactiveMapKit.framework in Frameworks */,
 				D3D4719F20A36419002567DB /* ReactiveCocoa.framework in Frameworks */,
 				D3D471A220A36419002567DB /* Result.framework in Frameworks */,
@@ -185,7 +186,6 @@
 				D3D4716520A35E97002567DB /* Models */,
 				D3D4716F20A35E97002567DB /* Controllers */,
 				D3D4715D20A35E97002567DB /* Networking */,
-				D3D4716720A35E97002567DB /* Extensions */,
 				D3D4716920A35E97002567DB /* Utilities */,
 			);
 			path = Code;
@@ -240,14 +240,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		D3D4716720A35E97002567DB /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				D3D4716820A35E97002567DB /* .gitkeep */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
 		D3D4716920A35E97002567DB /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -297,6 +289,7 @@
 		D3D4719020A363C3002567DB /* Carthage */ = {
 			isa = PBXGroup;
 			children = (
+				D354C27A20AA232600F88080 /* PKHUD.framework */,
 				D3D4719720A36418002567DB /* Alamofire.framework */,
 				D3D4719220A36418002567DB /* AlamofireImage.framework */,
 				D3D4719820A36418002567DB /* Moya.framework */,
@@ -381,7 +374,6 @@
 				D3D4714F20A35E8A002567DB /* Cartfile in Resources */,
 				D3D4717820A35E97002567DB /* LaunchScreen.storyboard in Resources */,
 				D3D4717620A35E97002567DB /* Assets.xcassets in Resources */,
-				D3D4718420A35E97002567DB /* .gitkeep in Resources */,
 				D3D471AF20A38926002567DB /* ImageCollectionCell.xib in Resources */,
 				D3D4717E20A35E97002567DB /* test.json in Resources */,
 				D3D4718C20A35E97002567DB /* Info.plist in Resources */,
@@ -406,6 +398,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/ReactiveMoya.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ReactiveCocoa.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ReactiveMapKit.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/PKHUD.framework",
 			);
 			name = Carthage;
 			outputPaths = (

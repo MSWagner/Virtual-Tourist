@@ -26,7 +26,6 @@ class CollectionViewController: UIViewController {
         didSet {
             if let viewModel = viewModel {
                 viewModel.photos.producer.startWithValues { [weak self] _ in
-                    print("Reload CollectionView")
                     self?.collectionView.reloadData()
                 }
             }
