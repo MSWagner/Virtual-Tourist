@@ -19,31 +19,37 @@ class DataController {
         return persistentController.viewContext
     }
 
-    var backgroundContext: NSManagedObjectContext!
-
     init(modelName: String) {
         persistentController = NSPersistentContainer(name: modelName)
     }
 
-    private func configureContexts() {
-        backgroundContext = persistentController.newBackgroundContext()
-
-        viewContext.automaticallyMergesChangesFromParent = true
-        backgroundContext.automaticallyMergesChangesFromParent = true
-
-        viewContext.mergePolicy = NSMergePolicy.mergeByPropertyStoreTrump
-        backgroundContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
-    }
-
     func load(completion: (() -> Void)? = nil) {
         persistentController.loadPersistentStores { storeDescription, error in
+            print("LoadPersistentStores")
+            print("StoreDescription: \(storeDescription.debugDescription)")
             guard error == nil else {
-                fatalError(error!.localizedDescription)
+                fatalError("FatalError: \(error!.localizedDescription)")
             }
             self.autoSaveViewContext()
-            self.configureContexts()
             completion?()
         }
+    }
+
+    @discardableResult
+    func saveContext() -> Bool {
+        if viewContext.hasChanges {
+            do {
+                try viewContext.save()
+                return true
+            } catch {
+                // Replace this implementation with code to handle the error appropriately.
+                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                return false
+            }
+        }
+        return true
     }
 }
 
@@ -58,9 +64,7 @@ extension DataController {
             return
         }
 
-        if viewContext.hasChanges {
-            try? viewContext.save()
-        }
+        saveContext()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + interval) {
             self.autoSaveViewContext(interval: interval)

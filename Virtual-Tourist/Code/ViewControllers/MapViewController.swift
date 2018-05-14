@@ -54,6 +54,7 @@ class MapViewController: UIViewController {
 
         setupMap()
         isAnnotationAdded = false
+        viewModel.fetchPins()
     }
 
     // MARK: - Setup
@@ -63,14 +64,12 @@ class MapViewController: UIViewController {
     }
 
     private func bindPins() {
-//        viewModel.pins.producer.startWithValues { [weak self] pins in
-//            guard let `self` = self else { return }
-//
-//            let pinAnnotations = pins.map { PinAnnotation.init(pin: $0) }
-//
-//            self.mapView.removeAnnotations(self.mapView.annotations)
-//            self.mapView.addAnnotations(pinAnnotations)
-//        }
+        viewModel.pinAnnotations.producer.startWithValues { [weak self] pinAnnotations in
+            guard let `self` = self else { return }
+
+            self.mapView.removeAnnotations(self.mapView.annotations)
+            self.mapView.addAnnotations(pinAnnotations)
+        }
     }
 
     private func setupCollectionViewController() {

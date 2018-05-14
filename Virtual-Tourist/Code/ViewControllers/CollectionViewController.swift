@@ -25,7 +25,7 @@ class CollectionViewController: UIViewController {
     var viewModel: PhotoCollectionViewModel? {
         didSet {
             if let viewModel = viewModel {
-                viewModel.pin.producer.startWithValues { [weak self] _ in
+                viewModel.photos.producer.startWithValues { [weak self] _ in
                     print("Reload CollectionView")
                     self?.collectionView.reloadData()
                 }
@@ -52,7 +52,7 @@ class CollectionViewController: UIViewController {
 extension CollectionViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let photos = viewModel?.pin.value?.photos {
+        if let photos = viewModel?.photos.value {
             return photos.count
         }
         return 0
@@ -61,9 +61,8 @@ extension CollectionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! ImageCollectionCell
 
-        // TODO: Implement Photo Selection from the current pin
         if let viewModel = viewModel {
-//            cell.configure(photo: viewModel.photos.value[indexPath.row])
+            cell.configure(photo: viewModel.photos.value[indexPath.row])
         }
 
         return cell

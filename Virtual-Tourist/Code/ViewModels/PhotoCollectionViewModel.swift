@@ -14,29 +14,31 @@ import CoreData
 
 class PhotoCollectionViewModel {
 
-    var pin: MutableProperty<Pin?>
+    private var selectedPin: MutableProperty<Pin?>
+
+    private let _photos = MutableProperty<[Photo]>([])
+    lazy var photos: Property<[Photo]> = {
+        return Property(self._photos)
+    }()
+
+    private var dataController = DataController.shared
 
     private var currentFlickrPhotos: FlickrPhotos?
 
     // MARK: - Init
 
     init(pin: MutableProperty<Pin?>) {
-        self.pin = pin
+        self.selectedPin = pin
 
-        pin.producer.startWithValues {  [weak self] pin in
+        self.selectedPin.producer.startWithValues {  [weak self] pin in
             guard let pin = pin else { return }
 
-            if let photos = pin.photos, photos.count > 0 {
-
-                print("there is a photo")
+            if let photos = pin.photoArray, photos.count > 0 {
+                self?._photos.value = photos
             } else {
-                print("there are no photos")
                 self?.currentFlickrPhotos = nil
 
-                let lat = Double(pin.latitude)
-                let lng = Double(pin.longitude)
-
-                self?.searchImagesFor.apply((lat, lng, nil)).start()
+                self?.searchImagesFor.apply((pin, nil)).start()
             }
         }
     }
@@ -44,33 +46,45 @@ class PhotoCollectionViewModel {
     // MARK: - Network Requests
 
     func setNewCollection() {
-        guard let pin = pin.value, let currentPhotos = currentFlickrPhotos else { return }
+        guard let pin = selectedPin.value, let photos = pin.photos else { return }
 
-        let nextPage = currentPhotos.page + 1 > currentPhotos.pages ? 1 : currentPhotos.page + 1
+        pin.removeFromPhotos(photos)
+        if !dataController.saveContext() { return }
 
-        searchImagesFor.apply((pin.latitude, pin.longitude, nextPage)).start()
+        if let currentPage = currentFlickrPhotos?.page, let pages = currentFlickrPhotos?.pages {
+            let nextPage = currentPage + 1 > pages ? 1 : currentPage + 1
+            searchImagesFor.apply((pin, nextPage)).start()
+        } else {
+            searchImagesFor.apply((pin, 1)).start()
+        }
     }
 
-    lazy var searchImagesFor: Action<(Double, Double, Int?), FlickrPhotoSearchResult, APIError> = {
-        return Action { geoValues in
-            APIClient
-                .request(.photosSearch(lat: geoValues.0, lng: geoValues.1, page: geoValues.2 ?? 1), type: FlickrPhotoSearchResult.self)
+    lazy var searchImagesFor: Action<(Pin, Int?), FlickrPhotoSearchResult, APIError> = {
+        return Action { inputValues in
+
+            let pin = inputValues.0
+            let page = inputValues.1
+
+            return APIClient
+                .request(.photosSearch(lat: pin.latitude, lng: pin.longitude, page: page ?? 1), type: FlickrPhotoSearchResult.self)
                 .on { [weak self] (value) in
-                    self?.currentFlickrPhotos = value.photos
+                    guard let `self` = self else { return }
+
+                    self.currentFlickrPhotos = value.photos
 
                     let photos: [Photo] = value.photos.photo.compactMap {
-                        print("value.photos.photo.compactMap")
                         let photo = Photo(context: DataController.shared.viewContext)
                         photo.url = URL(string: "https://farm\($0.farm).staticflickr.com/\($0.server)/\($0.id)_\($0.secret)_q.jpg")
 
                         return photo
                     }
 
-                    // TODO: Implement and Test updating the current pin on View and CoreData
-                    if let pin = self?.pin.value, let oldPhotos = pin.photos {
-                        oldPhotos.addingObjects(from: photos)
-                        try? DataController.shared.viewContext.save()
-                        self?.pin.value = pin
+                    photos.forEach{ photo in
+                        pin.addToPhotos(photo)
+                    }
+
+                    if self.dataController.saveContext() {
+                        self._photos.value = photos
                     }
                 }
         }
@@ -79,6 +93,16 @@ class PhotoCollectionViewModel {
     // MARK: - Deletion
 
     func deletePhotoWith(_ indexPath: IndexPath) {
-        // TODO: Delete Photos
+        guard let pin = selectedPin.value else { return }
+
+        let removedPhoto = _photos.value.remove(at: indexPath.row)
+        pin.removeFromPhotos(removedPhoto)
+
+        do {
+            try DataController.shared.viewContext.save()
+            self._photos.value = self._photos.value
+        } catch {
+            fatalError("Photos not saved")
+        }
     }
 }

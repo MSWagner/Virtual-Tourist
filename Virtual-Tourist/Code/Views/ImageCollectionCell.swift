@@ -24,7 +24,7 @@ class ImageCollectionCell: UICollectionViewCell {
             imageView.af_setImage(withURL: url) { response in
                 photo.image = response.data
 
-                try? DataController.shared.viewContext.save()
+                DataController.shared.saveContext()
             }
         }
     }
