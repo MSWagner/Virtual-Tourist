@@ -22,17 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func applicationWillResignActive(_: UIApplication) {
-    }
-
     func applicationDidEnterBackground(_: UIApplication) {
         saveViewContext()
-    }
-
-    func applicationWillEnterForeground(_: UIApplication) {
-    }
-
-    func applicationDidBecomeActive(_: UIApplication) {
     }
 
     func applicationWillTerminate(_: UIApplication) {
