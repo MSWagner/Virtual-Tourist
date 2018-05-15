@@ -5,6 +5,8 @@ Virtual Tourist is a project for the **Udacity iOS Developer Nanodegree**.
 - Xcode: 11.3
 - Swift: 4.1
 
+Run carthage update --platform ios to install/update all needed dependencies
+
 ## Screenshots
 ### Map & CollectionView Presentation
 | Login | Map |
