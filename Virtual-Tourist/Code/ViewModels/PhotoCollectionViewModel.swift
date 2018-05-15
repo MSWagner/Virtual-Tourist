@@ -30,14 +30,16 @@ class PhotoCollectionViewModel {
         self.selectedPin = pin
 
         self.selectedPin.producer.startWithValues {  [weak self] pin in
-            guard let pin = pin else { return }
+            guard let pin = pin, let `self` = self else { return }
 
             if let photos = pin.photoArray, photos.count > 0 {
-                self?._photos.value = photos
+                self._photos.value = photos
             } else {
-                self?.currentFlickrPhotos = nil
 
-                self?.searchImagesFor.apply((pin, nil)).start()
+                if !self.searchImagesFor.isExecuting.value {
+                    self.currentFlickrPhotos = nil
+                    self.searchImagesFor.apply((pin, nil)).start()
+                }
             }
         }
     }
@@ -45,17 +47,23 @@ class PhotoCollectionViewModel {
     // MARK: - Network Requests
 
     func setNewCollection() {
-        guard let pin = selectedPin.value, let photos = pin.photos else { return }
+        guard let pin = selectedPin.value else { return }
 
-        pin.removeFromPhotos(photos)
+        let newPin = Pin(context: dataController.viewContext)
+        newPin.latitude = pin.latitude
+        newPin.longitude = pin.longitude
+
+        dataController.viewContext.delete(pin)
+
         if !dataController.saveContext() { return }
 
         if let currentPage = currentFlickrPhotos?.page, let pages = currentFlickrPhotos?.pages {
             let nextPage = currentPage + 1 > pages ? 1 : currentPage + 1
-            searchImagesFor.apply((pin, nextPage)).start()
+            searchImagesFor.apply((newPin, nextPage)).start()
         } else {
-            searchImagesFor.apply((pin, 1)).start()
+            searchImagesFor.apply((newPin, 1)).start()
         }
+        selectedPin.value = newPin
     }
 
     lazy var searchImagesFor: Action<(Pin, Int?), FlickrPhotoSearchResult, APIError> = {
@@ -96,6 +104,7 @@ class PhotoCollectionViewModel {
 
         let removedPhoto = _photos.value.remove(at: indexPath.row)
         pin.removeFromPhotos(removedPhoto)
+        dataController.viewContext.delete(removedPhoto)
 
         if dataController.saveContext() {
             self._photos.value = self._photos.value
